@@ -6,35 +6,44 @@
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.PrintWriter;
-import java.io.FileWriter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.FileOutputStream;
 
 public class PayrollProcessor {
     public static void main(String[] args) {
-        // Display welcome message.
         System.out.println("Welcome to Payroll Processor by Your Name (Student ID: 12345678).");
         System.out.println("Processing payroll file...\n");
 
-        EmployeeArray employeeArray = new EmployeeArray();
+        // Create an array to store valid Employee objects.
+        // We assume a maximum of 1000 valid employees.
+        Employee[] employees = new Employee[1000];
+        int validCount = 0;
+
         int totalLines = 0;
         int errorLines = 0;
-
-        // Fixed-size array to store error lines (assumed maximum of 100 errors).
+        // Fixed-size array for up to 100 error lines.
         String[] errorLinesArray = new String[100];
         int errorIndex = 0;
 
-        // Read the payroll.txt file using BufferedReader and write invalid lines to payrollError.txt using PrintWriter.
-        try (BufferedReader br = new BufferedReader(new FileReader("payroll.txt"));
-             PrintWriter errorWriter = new PrintWriter(new FileWriter("payrollError.txt"))) {
+        BufferedReader br = null;
+        PrintWriter errorWriter = null;
+
+        // Open the input file ("payroll.txt") and error file ("payrollError.txt").
+        try {
+            br = new BufferedReader(new FileReader("payroll.txt"));
+            errorWriter = new PrintWriter(new FileOutputStream("payrollError.txt"));
 
             String line;
             while ((line = br.readLine()) != null) {
                 totalLines++;
                 line = line.trim();
-                if (line.equals("")) continue; // Skip empty lines
+                if (line.equals("")) {
+                    continue; // Skip empty lines.
+                }
 
-                // Split the line on one or more spaces.
+                // Split the line into tokens based on whitespace.
                 String[] tokens = line.split("\\s+");
                 if (tokens.length != 5) {
                     errorLines++;
@@ -57,7 +66,13 @@ public class PayrollProcessor {
                     }
 
                     Employee emp = new Employee(empNumber, firstName, lastName, hoursWorked, hourlyWage);
-                    employeeArray.add(emp);
+                    // Add the employee to the array.
+                    if (validCount < employees.length) {
+                        employees[validCount] = emp;
+                        validCount++;
+                    } else {
+                        System.err.println("Maximum employee count reached. Cannot add more employees.");
+                    }
                 } catch (NumberFormatException | MinimumWageException e) {
                     errorLines++;
                     errorWriter.println(line);
@@ -66,12 +81,23 @@ public class PayrollProcessor {
                     }
                 }
             }
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found: " + e.getMessage());
         } catch (IOException e) {
-            System.err.println("Error reading payroll file: " + e.getMessage());
-            return;
+            System.err.println("I/O error while reading file: " + e.getMessage());
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    System.err.println("Error closing input file: " + e.getMessage());
+                }
+            }
+            if (errorWriter != null) {
+                errorWriter.close();
+            }
         }
 
-        // Display error lines found.
         System.out.println("> Error lines found in file payroll:");
         for (int i = 0; i < errorIndex; i++) {
             System.out.println(errorLinesArray[i]);
@@ -79,7 +105,7 @@ public class PayrollProcessor {
         System.out.println("> " + totalLines + " lines read from file payroll.");
         System.out.println("> " + errorLines + " lines written to error file.\n");
 
-        // Calculate deductions for each employee.
+        // Calculate deductions for each valid employee.
         System.out.println("> Calculating deductions");
         Deductions ei = new EI();
         Deductions qpip = new QPIP();
@@ -87,8 +113,7 @@ public class PayrollProcessor {
         Deductions provincialTax = new ProvincialIncomeTax();
         Deductions federalTax = new FederalIncomeTax();
 
-        Employee[] employees = employeeArray.getEmployees();
-        for (int i = 0; i < employeeArray.size(); i++) {
+        for (int i = 0; i < validCount; i++) {
             Employee emp = employees[i];
             double gross = emp.grossSalary;
             double totalDeduction = 0;
@@ -100,34 +125,36 @@ public class PayrollProcessor {
             emp.setDeductions(totalDeduction);
         }
 
-        // Write the payroll report to payrollReport.txt using PrintWriter.
-        System.out.println("> Writing report file");
-        try (PrintWriter reportWriter = new PrintWriter(new FileWriter("payrollReport.txt"))) {
+        // Write the payroll report to "payrollReport.txt".
+        PrintWriter reportWriter = null;
+        try {
+            reportWriter = new PrintWriter(new FileOutputStream("payrollReport.txt"));
             reportWriter.println("iDroid Solutions");
             reportWriter.println("-----------------------");
             reportWriter.println();
             reportWriter.printf("%-15s %-12s %-12s %-18s %-15s %-15s%n",
-                    "Employee Number", "First name", "Last Name", "Gross salary", "Deductions", "Net salary");
+                    "Employee Number", "First name", "Last Name",
+                    "Gross salary", "Deductions", "Net salary");
             reportWriter.println("-------------------------------------------------------------------------------------------------------");
 
-            for (int i = 0; i < employeeArray.size(); i++) {
+            for (int i = 0; i < validCount; i++) {
                 Employee emp = employees[i];
                 String grossStr = String.format("$%,.2f", emp.grossSalary);
                 String deductionsStr = String.format("$%,.2f", emp.totalDeductions);
                 String netStr = String.format("$%,.2f", emp.netSalary);
-
                 reportWriter.printf("%-15d %-12s %-12s %-18s %-15s %-15s%n",
-                        emp.employeeNumber,
-                        emp.firstName,
-                        emp.lastName,
-                        grossStr,
-                        deductionsStr,
-                        netStr);
+                        emp.employeeNumber, emp.firstName, emp.lastName,
+                        grossStr, deductionsStr, netStr);
             }
-        } catch (IOException e) {
+        } catch (FileNotFoundException e) {
             System.err.println("Error writing report file: " + e.getMessage());
+        } finally {
+            if (reportWriter != null) {
+                reportWriter.close();
+            }
         }
 
         System.out.println("\nThank you for using Payroll Processor. Program terminated.");
     }
 }
+

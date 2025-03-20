@@ -5,3 +5,4 @@ public class EI extends Deductions {
         return premium > 1077.48 ? 1077.48 : premium;
     }
 }
+

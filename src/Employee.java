@@ -1,10 +1,3 @@
-//
-// Assignment 1
-// Question: Payroll Processor Assignment
-// Written by: Your Name, Student ID: 12345678
-//
-// This class stores employee data and computes the annual gross salary.
-
 public class Employee {
     long employeeNumber;
     String firstName;
@@ -21,6 +14,7 @@ public class Employee {
         this.lastName = lastName;
         this.hoursWorked = hoursWorked;
         this.hourlyWage = hourlyWage;
+        // Annual gross salary = hours worked per week * hourly wage * 52 weeks
         this.grossSalary = hoursWorked * hourlyWage * 52;
     }
 

@@ -5,4 +5,3 @@ public class QPIP extends Deductions {
         return premium > 484.12 ? 484.12 : premium;
     }
 }
-
