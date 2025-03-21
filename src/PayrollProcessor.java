@@ -1,8 +1,8 @@
-//
+//---------------------------------------------------------------------------
 // Assignment 2
 // Question:
 // Written by: Emile Ghattas (id: 40282552) and Ryan Khaled (id: 40307741)
-//
+//---------------------------------------------------------------------------
 
 import java.io.BufferedReader;
 import java.io.FileReader;
