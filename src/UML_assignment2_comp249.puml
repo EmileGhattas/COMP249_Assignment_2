@@ -1,0 +1,60 @@
+@startuml
+' COMP 249 - Assignment 2 UML Diagram
+' Written by: Ryan Khaled and Emile Ghattas
+
+abstract class Deductions {
+    +calculateTax(grossSalary: double): double
+}
+
+class Employee {
+    -employeeNumber: long
+    -firstName: String
+    -lastName: String
+    -hoursWorked: double
+    -hourlyWage: double
+    -grossSalary: double
+    -totalDeductions: double
+    -netSalary: double
+    +Employee(...)
+    +setDeductions(totalDeductions: double): void
+}
+
+class MinimumWageException {
+    +MinimumWageException(message: String)
+}
+
+class PayrollProcessor {
+    +main(args: String[]): void
+}
+
+class EI {
+    +calculateTax(grossSalary: double): double
+}
+
+class QPIP {
+    +calculateTax(grossSalary: double): double
+}
+
+class QPP {
+    +calculateTax(grossSalary: double): double
+}
+
+class ProvincialIncomeTax {
+    +calculateTax(grossSalary: double): double
+}
+
+class FederalIncomeTax {
+    +calculateTax(grossSalary: double): double
+}
+
+Deductions <|-- EI
+Deductions <|-- QPIP
+Deductions <|-- QPP
+Deductions <|-- ProvincialIncomeTax
+Deductions <|-- FederalIncomeTax
+
+PayrollProcessor --> Employee
+PayrollProcessor --> Deductions
+PayrollProcessor --> MinimumWageException
+
+@enduml

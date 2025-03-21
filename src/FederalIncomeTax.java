@@ -1,7 +1,25 @@
+//
+// Assignment 2
+// Question:
+// Written by: Emile Ghattas (id: 40282552) and Ryan Khaled (id: 40307741)
+//
+
+/**
+ * calculates the federal income tax deduction for a given gross salary
+ * based on Canadian federal tax brackets for the year 2025.
+ */
 public class FederalIncomeTax extends Deductions {
+
+    /**
+     * calculates the federal tax using tiered tax rates based on gross salary.
+     *
+     * @param grossSalary the employee's gross annual salary
+     * @return the total federal tax to be deducted
+     */
     @Override
     public double calculateTax(double grossSalary) {
         double tax = 0;
+
         if (grossSalary > 16129) {
             double taxable = Math.min(grossSalary, 57375) - 16129;
             tax += taxable * 0.15;
@@ -22,7 +40,7 @@ public class FederalIncomeTax extends Deductions {
             double taxable = grossSalary - 253414;
             tax += taxable * 0.33;
         }
+
         return tax;
     }
 }
-
