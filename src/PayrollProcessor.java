@@ -28,8 +28,11 @@ public class PayrollProcessor {
      */
     public static void main(String[] args) {
 
-        System.out.println("Welcome to Payroll Processor by Ryan Khaled (40307741) and Emile Ghattas (40282552).");
-        System.out.println("Processing payroll file...\n");
+        System.out.println("=============================================================");
+        System.out.println("||              Welcome to Payroll Processor               ||");
+        System.out.println("||  by Ryan Khaled (40307741) and Emile Ghattas (40282552) ||");
+        System.out.println("=============================================================\n");
+        System.out.println(">Opening file payroll...\n");
 
         Employee[] employees = new Employee[1000];
         int validCount = 0;
@@ -45,6 +48,7 @@ public class PayrollProcessor {
         try {
             br = new BufferedReader(new FileReader("payroll.txt"));
             errorWriter = new PrintWriter(new FileOutputStream("payrollError.txt"));
+            System.out.println(">Reading file payroll...\n");
 
             String line;
             while ((line = br.readLine()) != null) {
@@ -96,8 +100,8 @@ public class PayrollProcessor {
         for (int i = 0; i < errorIndex; i++) {
             System.out.println(errorLinesArray[i]);
         }
-        System.out.println("> " + totalLines + " lines read from file payroll.");
-        System.out.println("> " + errorLines + " lines written to error file.\n");
+        System.out.println("\n> " + totalLines + " lines read from file payroll.");
+        System.out.println("\n> " + errorLines + " lines written to error file.\n");
 
         // calculate deductions
         System.out.println("> Calculating deductions");
@@ -118,6 +122,8 @@ public class PayrollProcessor {
             totalDeduction += federalTax.calculateTax(gross);
             emp.setDeductions(totalDeduction);
         }
+
+        System.out.println("\n> Writing report file");
 
         // write final report
         PrintWriter reportWriter = null;

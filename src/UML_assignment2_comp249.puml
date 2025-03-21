@@ -19,13 +19,10 @@ class Employee {
     +setDeductions(totalDeductions: double): void
 }
 
-class MinimumWageException {
+exception MinimumWageException {
     +MinimumWageException(message: String)
 }
 
-class PayrollProcessor {
-    +main(args: String[]): void
-}
 
 class EI {
     +calculateTax(grossSalary: double): double
@@ -52,9 +49,6 @@ Deductions <|-- QPIP
 Deductions <|-- QPP
 Deductions <|-- ProvincialIncomeTax
 Deductions <|-- FederalIncomeTax
-
-PayrollProcessor --> Employee
-PayrollProcessor --> Deductions
-PayrollProcessor --> MinimumWageException
+Employee <... MinimumWageException
 
 @enduml
