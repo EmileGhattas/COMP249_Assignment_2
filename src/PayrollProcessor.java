@@ -28,10 +28,12 @@ public class PayrollProcessor {
      */
     public static void main(String[] args) {
 
-        System.out.println("=============================================================");
+        System.out.println("**************************************************************");
+        System.out.println("||                                                         ||");
         System.out.println("||              Welcome to Payroll Processor               ||");
         System.out.println("||  by Ryan Khaled (40307741) and Emile Ghattas (40282552) ||");
-        System.out.println("=============================================================\n");
+        System.out.println("||                                                         ||");
+        System.out.println("**************************************************************\n");
         System.out.println(">Opening file payroll...\n");
 
         Employee[] employees = new Employee[1000];
