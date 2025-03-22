@@ -1,17 +1,24 @@
-//
-// Assignment 2
-// Question:
-// Written by: Emile Ghattas (id: 40282552) and Ryan Khaled (id: 40307741)
-//
+/**
+ * Assignment 2
+ *
+ * Question:
+ * Written by: Emile Ghattas (id: 40282552) and Ryan Khaled (id: 40307741)
+ */
 
 /**
- * calculates the federal income tax deduction for a given gross salary
- * based on Canadian federal tax brackets for the year 2025.
+ * Calculates the federal income tax deduction for a given gross salary
+ * based on the Canadian federal tax brackets for the year 2025.
  */
 public class FederalIncomeTax extends Deductions {
 
     /**
-     * calculates the federal tax using tiered tax rates based on gross salary.
+     * Default constructor for QPP deduction calculator.
+     */
+    public FederalIncomeTax() {
+    }
+
+    /**
+     * Calculates the federal tax using tiered tax rates based on the employee's gross salary.
      *
      * @param grossSalary the employee's gross annual salary
      * @return the total federal tax to be deducted

@@ -1,17 +1,26 @@
-//
-// Assignment 2
-// Question:
-// Written by: Emile Ghattas (id: 40282552) and Ryan Khaled (id: 40307741)
-//
+/**
+ * Assignment 2
+ *
+ * Question:
+ * Written by: Emile Ghattas (id: 40282552) and Ryan Khaled (id: 40307741)
+ */
 
 /**
- * calculates the Quebec provincial income tax based on the 2025 tax brackets.
- * applies a progressive tax rate based on the employee's gross salary.
+ * Calculates the Quebec provincial income tax based on the 2025 tax brackets.
+ * <p>
+ * Applies a progressive tax rate based on the employee's gross salary.
+ * </p>
  */
 public class ProvincialIncomeTax extends Deductions {
 
     /**
-     * calculates the provincial income tax to be deducted from gross salary.
+     * Default constructor for QPP deduction calculator.
+     */
+    public ProvincialIncomeTax() {
+    }
+
+    /**
+     * Calculates the provincial income tax to be deducted from the gross salary.
      *
      * @param grossSalary the employee's annual gross salary
      * @return the calculated provincial tax

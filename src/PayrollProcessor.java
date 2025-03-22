@@ -12,27 +12,37 @@ import java.io.PrintWriter;
 import java.io.FileOutputStream;
 
 /**
- * the PayrollProcessor reads employee payroll data from a file, filters invalid entries,
- * calculates gross salary and deductions, and generates a report with net salaries.
+ * The PayrollProcessor class is responsible for processing employee payroll data.
+ * <p>
+ * It performs the following tasks:
+ * <ul>
+ *   <li>Reads employee data from a file named "payroll.txt".</li>
+ *   <li>Filters out invalid data and logs errors to "payrollError.txt".</li>
+ *   <li>Calculates the gross salary and applies various deductions (EI, QPIP, QPP, Provincial Tax, Federal Tax).</li>
+ *   <li>Generates a detailed payroll report in "payrollReport.txt" showing net salaries.</li>
+ * </ul>
  */
 public class PayrollProcessor {
 
     /**
-     * main method to execute the payroll processing logic:
-     * - reads employee data from "payroll.txt"
-     * - filters out invalid data and logs it to "payrollError.txt"
-     * - calculates gross salary and deductions
-     * - writes a report to "payrollReport.txt"
+     * Private constructor to prevent instantiation of this driver class.
+     */
+    private PayrollProcessor() {
+    }
+
+    /**
+     *
+     * Main method to execute the payroll processing logic.
      *
      * @param args command-line arguments (not used)
      */
     public static void main(String[] args) {
 
         System.out.println("**************************************************************");
-        System.out.println("||                                                         ||");
-        System.out.println("||              Welcome to Payroll Processor               ||");
-        System.out.println("||  by Ryan Khaled (40307741) and Emile Ghattas (40282552) ||");
-        System.out.println("||                                                         ||");
+        System.out.println("||                                                          ||");
+        System.out.println("||              Welcome to Payroll Processor                ||");
+        System.out.println("||  by Ryan Khaled (40307741) and Emile Ghattas (40282552)  ||");
+        System.out.println("||                                                          ||");
         System.out.println("**************************************************************\n");
         System.out.println(">Opening file payroll...\n");
 
@@ -46,7 +56,7 @@ public class PayrollProcessor {
         BufferedReader br = null;
         PrintWriter errorWriter = null;
 
-        // read payroll.txt and filter invalid lines
+        // Read payroll.txt and filter invalid lines
         try {
             br = new BufferedReader(new FileReader("payroll.txt"));
             errorWriter = new PrintWriter(new FileOutputStream("payrollError.txt"));
@@ -105,7 +115,7 @@ public class PayrollProcessor {
         System.out.println("\n> " + totalLines + " lines read from file payroll.");
         System.out.println("\n> " + errorLines + " lines written to error file.\n");
 
-        // calculate deductions
+        // Calculate deductions
         System.out.println("> Calculating deductions");
         Deductions ei = new EI();
         Deductions qpip = new QPIP();
@@ -127,7 +137,7 @@ public class PayrollProcessor {
 
         System.out.println("\n> Writing report file");
 
-        // write final report
+        // Write final report
         PrintWriter reportWriter = null;
         try {
             reportWriter = new PrintWriter(new FileOutputStream("payrollReport.txt"));
