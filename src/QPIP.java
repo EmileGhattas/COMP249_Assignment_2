@@ -34,6 +34,6 @@ public class QPIP extends Deductions {
     @Override
     public double calculateTax(double grossSalary) {
         double premium = grossSalary * 0.00494;
-        return premium > 494.12 ? 494.12 : premium;
+        return premium > 484.12 ? 484.12 : premium; // On the instructions of Section PP, the maximum premium is 494.12 not 484.12
     }
 }

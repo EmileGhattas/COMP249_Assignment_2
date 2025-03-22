@@ -11,6 +11,16 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.FileOutputStream;
 
+/*
+ * This program reads employee payroll data from a file named "payroll.txt",
+ * filters out invalid or improperly formatted records (e.g., incorrect number of fields,
+ * non-numeric data, or hourly wage below minimum), and logs these to "payrollError.txt".
+ * For each valid employee, it calculates the gross salary based on hours worked and hourly wage,
+ * applies various government deductions (EI, QPIP, QPP, Provincial and Federal taxes),
+ * and writes a detailed payroll report with net salaries to "payrollReport.txt".
+ * The program is designed for batch processing of up to 1000 employee records.
+ */
+
 /**
  * The PayrollProcessor class is responsible for processing employee payroll data.
  * <p>
